@@ -1,6 +1,10 @@
 package com.anthony.shakeitoff;
 
 import android.app.Activity;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -8,15 +12,20 @@ import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.hardware.Camera;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements SensorEventListener {
     public static final String TAG = "MainActivity";
     private SurfaceView preview = null;
     private SurfaceHolder previewHolder = null;
     private Camera camera = null;
+    private SensorManager cSensorManager;
     private boolean inPreview = false;
     private boolean cameraConfigured = false;
+    private float currentDegree = 0f;
+
+    TextView tvHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,13 @@ public class MainActivity extends Activity {
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        //Text view that will tell the user what degree for testing
+        tvHeading = (TextView) findViewById(R.id.tvHeading);
+
+        //initialize your android device sensor capabilities
+        cSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
     }
 
     @Override
@@ -40,6 +56,9 @@ public class MainActivity extends Activity {
 
         camera = openCamera(false);
         startPreview(); inPreview = true;
+
+        //for the system's orientation sensor registered listeners
+        cSensorManager.registerListener(this, cSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
@@ -49,6 +68,8 @@ public class MainActivity extends Activity {
         camera.release(); camera = null;
 
         super.onPause();
+
+        cSensorManager.unregisterListener(this);
     }
 
     private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
@@ -107,5 +128,17 @@ public class MainActivity extends Activity {
             }
         }
         return cam;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event){
+        float degree = Math.round(event.values[0]);
+        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+        currentDegree = -degree;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy){
+        //not in use
     }
 }
