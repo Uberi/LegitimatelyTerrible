@@ -71,11 +71,13 @@ public class MainActivity extends Activity implements SensorEventListener {
         cSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         // set up the shake listener and back button for after picture taken
-        final ImageButton backButton = ((ImageButton)findViewById(R.id.back_button));
+        final ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
+        final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
         backButton.setEnabled(false);
+        swapCameraButton.setEnabled(true);
         mShaker = new ShakeListener(this);
         mShaker.setOnShakeListener(new ShakeListener.OnShakeListener () {
-            public void onShake() { takePicture(); backButton.setEnabled(true); }
+            public void onShake() { takePicture(); }
         });
         backButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -83,17 +85,19 @@ public class MainActivity extends Activity implements SensorEventListener {
                     public void onClick(View v) {
                         if (camera != null && cameraConfigured && !inPreview) startPreview();
                         backButton.setEnabled(false);
+                        swapCameraButton.setEnabled(true);
+
                     }
                 }
         );
-
-        ((ImageButton)findViewById(R.id.swap_camera_button)).setOnClickListener(
+        swapCameraButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (camera != null) { camera.release(); camera = null; }
                         useFrontComera = !useFrontComera;
                         camera = openCamera(useFrontComera);
+                        inPreview = false; startPreview();
                     }
                 }
         );
@@ -265,6 +269,11 @@ public class MainActivity extends Activity implements SensorEventListener {
         if (camera != null && cameraConfigured && inPreview) {
             inPreview = false;
             camera.takePicture(null, null, pictureSaver); // take picture with JPEG callback
+
+            final ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
+            backButton.setEnabled(true);
+            final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
+            swapCameraButton.setEnabled(false);
         }
     }
     private Camera.PictureCallback pictureSaver = new Camera.PictureCallback() {
