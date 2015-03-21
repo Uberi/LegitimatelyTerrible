@@ -17,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.hardware.Camera;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import java.util.Calendar;
 
 import java.io.File;
@@ -39,15 +38,9 @@ public class MainActivity extends Activity implements SensorEventListener {
     //checks the direction of spinning
     private SensorManager cSensorManager;
     private boolean canSpin = false;
-    private boolean spinDir = false;
     private float currentDegree = 0f;
-    private float startDegree = 0f;
     private float prevDegree = 0f;
     private int prevTime = 0;
-
-
-
-    TextView tvHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +56,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         previewHolder = preview.getHolder();
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-        //Text view that will tell the user what degree for testing
-        tvHeading = (TextView) findViewById(R.id.tvHeading);
 
         //initialize your android device sensor capabilities
         cSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -197,8 +187,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         return deg;
     }*/
 
-    private boolean suckit = false;
-    private boolean detectRoll = false;
     private boolean[] checkpointsR = new boolean[4];
     private boolean fullRollTurn = false;
 
@@ -236,7 +224,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         Calendar c = Calendar.getInstance();
         int curSeconds = c.get(Calendar.SECOND);
         if((prevDegree > degree - 5) && (prevDegree < degree + 5)) {
-            if (prevTime + 1 < curSeconds) {
+            if (prevTime + 2 < curSeconds) {
                 canSpin = true;
             }
         }
@@ -248,14 +236,10 @@ public class MainActivity extends Activity implements SensorEventListener {
             detectingRoll();
         }
         if(fullRollTurn){
-            suckit = true;
             canSpin = false;
             takePicture();
             fullRollTurn = false;
         }
-
-
-        tvHeading.setText("Heading: " + Float.toString(degree) + "canSpin" + canSpin + "circle: " + suckit);
         //I don't know why this is here so im commenting it out
         currentDegree = degree;
     }

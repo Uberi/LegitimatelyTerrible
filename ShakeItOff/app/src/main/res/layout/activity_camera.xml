@@ -24,15 +24,6 @@
                 android:layout_width="64dp" android:layout_height="64dp"
                 android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvHeading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="40dp"
-            android:layout_marginTop="20dp"
-            android:text="Heading: 0.0" />
     </FrameLayout>
 
 </FrameLayout>
