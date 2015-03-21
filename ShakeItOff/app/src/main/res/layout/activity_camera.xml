@@ -3,16 +3,17 @@
     android:layout_height="match_parent" android:background="#0099cc"
     tools:context=".CameraActivity">
 
-    <com.anthony.shakeitoff.util.CameraPreview
-        android:id="@+id/preview"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:id="@+id/">
+        android:id="@+id/layout">
+
+        <SurfaceView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/preview"
+            android:layout_gravity="center" />
 
         <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
             android:layout_width="match_parent" android:layout_height="wrap_content"
