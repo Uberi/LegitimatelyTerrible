@@ -212,8 +212,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     private void detectingRoll(){
         setDetectRoll(true);
-        checkpointsR[0] = true;
-        for(int i = 1; i < 4; i++){
+        for(int i = 0; i < 4; i++){
             if((currentDegree > 90 * i && currentDegree < 90 * (i + 1))){
                 checkpointsR[i] = true;
             }
@@ -221,7 +220,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         if(areAllTrue(checkpointsR) && currentDegree > 0 && currentDegree > 45){
             fullRollTurn = true;
             //reset checkpoints
-            for(int i = 1; i < 4; i++){
+            for(int i = 0; i < 4; i++){
                 checkpointsR[i] = false;
             }
         }
@@ -247,7 +246,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         if(fullRollTurn){
             suckit = true;
             canSpin = false;
-            //take picture
+            takePicture();
+            fullRollTurn = false;
         }
 
 
