@@ -6,10 +6,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.app.Activity;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,10 +16,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.hardware.Camera;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+import java.util.Calendar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,8 +36,16 @@ public class MainActivity extends Activity implements SensorEventListener {
     private SurfaceHolder previewHolder = null;
     private Camera camera = null;
 
+    //checks the direction of spinning
     private SensorManager cSensorManager;
+    private boolean canSpin = false;
+    private boolean spinDir = false;
     private float currentDegree = 0f;
+    private float startDegree = 0f;
+    private float prevDegree = 0f;
+    private int prevTime = 0;
+
+
 
     TextView tvHeading;
 
@@ -172,7 +175,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
             Camera.getCameraInfo(i, cameraInfo);
             if ((frontCamera && cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) ||
-                (!frontCamera && cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK)) {
+                    (!frontCamera && cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK)) {
                 try { cam = Camera.open(i); }
                 catch (RuntimeException e) { Log.e(TAG, "Camera failed to open: " + e.getLocalizedMessage()); }
             }
@@ -180,11 +183,77 @@ public class MainActivity extends Activity implements SensorEventListener {
         return cam;
     }
 
+
+    //MOD FUNCTIONS ARE REQUIRED IN ORDER TO WORK WITH DEGREES
+    /*private float modDeg(float deg){
+        deg = deg % 360;
+        if(deg < 0){
+            deg = deg + 360;
+        }
+        return deg;
+    }*/
+
+    private boolean suckit = false;
+    private boolean detectRoll = false;
+    private boolean[] checkpointsR = new boolean[4];
+    private boolean fullRollTurn = false;
+
+    private void setDetectRoll(boolean detectRoll){
+        this.detectRoll = detectRoll;
+    }
+
+    private boolean areAllTrue(boolean[] array){
+        for(boolean b : array)
+            if (!b)
+                return false;
+        return true;
+    }
+
+
+    private void detectingRoll(){
+        setDetectRoll(true);
+        checkpointsR[0] = true;
+        for(int i = 1; i < 4; i++){
+            if((currentDegree > 90 * i && currentDegree < 90 * (i + 1))){
+                checkpointsR[i] = true;
+            }
+        }
+        if(areAllTrue(checkpointsR) && currentDegree > 0 && currentDegree > 45){
+            fullRollTurn = true;
+            //reset checkpoints
+            for(int i = 1; i < 4; i++){
+                checkpointsR[i] = false;
+            }
+        }
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event){
         float degree = Math.round(event.values[0]);
-        tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
-        currentDegree = -degree;
+        Calendar c = Calendar.getInstance();
+        int curSeconds = c.get(Calendar.SECOND);
+        if((prevDegree > degree - 5) && (prevDegree < degree + 5)) {
+            if (prevTime + 1 < curSeconds) {
+                canSpin = true;
+            }
+        }
+        else {
+            prevDegree = degree;
+        }
+
+        if(canSpin){
+            detectingRoll();
+        }
+        if(fullRollTurn){
+            suckit = true;
+            canSpin = false;
+            //take picture
+        }
+
+
+        tvHeading.setText("Heading: " + Float.toString(degree) + "canSpin" + canSpin + "circle: " + suckit);
+        //I don't know why this is here so im commenting it out
+        currentDegree = degree;
     }
 
     @Override
