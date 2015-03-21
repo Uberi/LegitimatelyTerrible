@@ -9,22 +9,20 @@
         android:fitsSystemWindows="true"
         android:id="@+id/layout">
 
-        <SurfaceView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/preview"
-            android:layout_gravity="center" />
+        <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:id="@+id/preview" />
 
         <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay" android:orientation="horizontal"
             tools:ignore="UselessParent">
-
-            <Button android:id="@+id/dummy_button" style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="STUFF" />
-
+            <ImageButton
+                android:layout_width="64dp" android:layout_height="64dp"
+                android:id="@+id/back_button" android:background="@drawable/back" />
+            <ImageButton
+                android:layout_width="64dp" android:layout_height="64dp"
+                android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
         </LinearLayout>
 
         <TextView
