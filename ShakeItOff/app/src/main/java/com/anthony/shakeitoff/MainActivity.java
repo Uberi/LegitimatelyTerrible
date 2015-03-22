@@ -17,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.hardware.Camera;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import java.util.Calendar;
 
 import java.io.File;
@@ -24,6 +26,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends Activity implements SensorEventListener {
     public static final String TAG = "MainActivity";
@@ -41,6 +45,27 @@ public class MainActivity extends Activity implements SensorEventListener {
     private float currentDegree = 0f;
     private float prevDegree = 0f;
     private int prevTime = 0;
+
+    Timer timer = null;
+    class FlashTask extends TimerTask {
+        private int count = 10;
+
+        @Override
+        public void run() {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final ImageView flashOverlay = (ImageView)findViewById(R.id.flash_overlay);
+                    if (flashOverlay.getVisibility() == View.VISIBLE)
+                        flashOverlay.setVisibility(View.GONE);
+                    else
+                        flashOverlay.setVisibility(View.VISIBLE);
+                    count --;
+                    if (count == 0) FlashTask.this.cancel();
+                }
+            });
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,6 +217,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     private boolean[] checkpointsR = new boolean[4];
     private boolean fullRollTurn = false;
+    private boolean detectRoll = false;
 
     private void setDetectRoll(boolean detectRoll){
         this.detectRoll = detectRoll;
@@ -261,6 +287,8 @@ public class MainActivity extends Activity implements SensorEventListener {
             backButton.setEnabled(true);
             final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
             swapCameraButton.setEnabled(false);
+
+            timer = new Timer(); timer.schedule(new FlashTask(), 0, 100);
         }
     }
     private Camera.PictureCallback pictureSaver = new Camera.PictureCallback() {

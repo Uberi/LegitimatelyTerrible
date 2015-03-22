@@ -8,7 +8,6 @@
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:id="@+id/layout">
-
         <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:id="@+id/preview" />
 
@@ -24,6 +23,19 @@
                 android:layout_width="64dp" android:layout_height="64dp"
                 android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone"
+            android:id="@+id/flash_overlay" />
     </FrameLayout>
 
 </FrameLayout>
