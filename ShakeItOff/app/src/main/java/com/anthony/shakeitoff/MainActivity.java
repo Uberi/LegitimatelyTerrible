@@ -84,10 +84,13 @@ public class MainActivity extends Activity implements SensorEventListener {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (camera != null) { camera.release(); camera = null; }
+                        stopPreview();
                         useFrontComera = !useFrontComera;
+                        camera.release();
                         camera = openCamera(useFrontComera);
-                        inPreview = false; startPreview();
+                        try { camera.setPreviewDisplay(previewHolder); }
+                        catch (IOException e) {}
+                        startPreview();
                     }
                 }
         );
