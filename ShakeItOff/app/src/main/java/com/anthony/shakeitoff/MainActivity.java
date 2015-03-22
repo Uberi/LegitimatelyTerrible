@@ -18,16 +18,17 @@ import android.view.WindowManager;
 import android.hardware.Camera;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.media.MediaPlayer;
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends Activity implements SensorEventListener {
     public static final String TAG = "MainActivity";
@@ -45,10 +46,11 @@ public class MainActivity extends Activity implements SensorEventListener {
     private float currentDegree = 0f;
     private float prevDegree = 0f;
     private int prevTime = 0;
+    MediaPlayer mp = null;
 
     Timer timer = null;
     class FlashTask extends TimerTask {
-        private int count = 10;
+        private int count = 16;
 
         @Override
         public void run() {
@@ -59,13 +61,17 @@ public class MainActivity extends Activity implements SensorEventListener {
                     if (flashOverlay.getVisibility() == View.VISIBLE)
                         flashOverlay.setVisibility(View.GONE);
                     else
+                    {
                         flashOverlay.setVisibility(View.VISIBLE);
+                        mp.start();
+                    }
                     count --;
                     if (count == 0) FlashTask.this.cancel();
                 }
             });
         }
     };
+    ImageView crossImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +81,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
+
+        crossImage = (ImageView)findViewById(R.id.crosshair);
+        mp = MediaPlayer.create(this, R.raw.shot);
 
         // set up camera preview
         preview = (SurfaceView)findViewById(R.id.preview);
@@ -101,23 +110,23 @@ public class MainActivity extends Activity implements SensorEventListener {
                         if (camera != null && cameraConfigured && !inPreview) startPreview();
                         backButton.setEnabled(false);
                         swapCameraButton.setEnabled(true);
-
+                        crossImage.setVisibility(View.INVISIBLE);
                     }
                 }
         );
         swapCameraButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        stopPreview();
-                        useFrontComera = !useFrontComera;
-                        camera.release();
-                        camera = openCamera(useFrontComera);
-                        try { camera.setPreviewDisplay(previewHolder); }
-                        catch (IOException e) {}
-                        startPreview();
-                    }
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    stopPreview();
+                    useFrontComera = !useFrontComera;
+                    camera.release();
+                    camera = openCamera(useFrontComera);
+                    try { camera.setPreviewDisplay(previewHolder); }
+                    catch (IOException e) {}
+                    startPreview();
                 }
+            }
         );
     }
 
@@ -245,6 +254,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                 checkpointsR[i] = false;
             }
         }
+        setDetectRoll(false);
     }
 
     @Override
@@ -267,6 +277,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         if(fullRollTurn){
             canSpin = false;
             takePicture();
+            crossImage.setVisibility(View.VISIBLE);
+            crossImage.bringToFront();
             fullRollTurn = false;
         }
         //I don't know why this is here so im commenting it out

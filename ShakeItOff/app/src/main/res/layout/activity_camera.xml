@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#0099cc"
     tools:context=".CameraActivity">
-
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:id="@+id/layout">
+
         <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:id="@+id/preview" />
 
@@ -24,18 +24,18 @@
                 android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_gravity="center" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:visibility="gone"
-            android:id="@+id/flash_overlay" />
     </FrameLayout>
+    <ImageView
+        android:id="@+id/crosshair"
+        android:background="@drawable/crosshair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:id="@+id/flash_overlay" />
 
 </FrameLayout>
