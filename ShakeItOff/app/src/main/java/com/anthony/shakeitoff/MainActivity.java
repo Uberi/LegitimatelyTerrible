@@ -17,6 +17,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.hardware.Camera;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import java.util.Calendar;
 
 import java.io.File;
@@ -42,6 +44,9 @@ public class MainActivity extends Activity implements SensorEventListener {
     private float prevDegree = 0f;
     private int prevTime = 0;
 
+    //crosshair image
+    ImageView crossImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +55,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
-
+        crossImage = (ImageView)findViewById(R.id.crosshair);
         // set up camera preview
         preview = (SurfaceView)findViewById(R.id.preview);
         previewHolder = preview.getHolder();
@@ -76,7 +81,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                         if (camera != null && cameraConfigured && !inPreview) startPreview();
                         backButton.setEnabled(false);
                         swapCameraButton.setEnabled(true);
-
+                        crossImage.setVisibility(View.INVISIBLE);
                     }
                 }
         );
@@ -84,10 +89,14 @@ public class MainActivity extends Activity implements SensorEventListener {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (camera != null) { camera.release(); camera = null; }
+                        if (camera != null) {
+                            camera.release();
+                            camera = null;
+                        }
                         useFrontComera = !useFrontComera;
                         camera = openCamera(useFrontComera);
-                        inPreview = false; startPreview();
+                        inPreview = false;
+                        startPreview();
                     }
                 }
         );
@@ -186,7 +195,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         }
         return deg;
     }*/
-
+    private boolean detectRoll = false;
     private boolean[] checkpointsR = new boolean[4];
     private boolean fullRollTurn = false;
 
@@ -216,6 +225,7 @@ public class MainActivity extends Activity implements SensorEventListener {
                 checkpointsR[i] = false;
             }
         }
+        setDetectRoll(false);
     }
 
     @Override
@@ -238,6 +248,8 @@ public class MainActivity extends Activity implements SensorEventListener {
         if(fullRollTurn){
             canSpin = false;
             takePicture();
+            crossImage.setVisibility(View.VISIBLE);
+            crossImage.bringToFront();
             fullRollTurn = false;
         }
         //I don't know why this is here so im commenting it out

@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#0099cc"
     tools:context=".CameraActivity">
-
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
@@ -24,6 +23,13 @@
                 android:layout_width="64dp" android:layout_height="64dp"
                 android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
         </LinearLayout>
+
     </FrameLayout>
+    <ImageView
+        android:id="@+id/crosshair"
+        android:background="@drawable/crosshairs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 
 </FrameLayout>
