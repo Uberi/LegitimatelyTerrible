@@ -18,8 +18,10 @@ import android.view.WindowManager;
 import android.hardware.Camera;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
+import android.media.MediaPlayer;
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,6 +45,32 @@ public class MainActivity extends Activity implements SensorEventListener {
     private float currentDegree = 0f;
     private float prevDegree = 0f;
     private int prevTime = 0;
+    MediaPlayer mp = null;
+
+    Timer timer = null;
+    class FlashTask extends TimerTask {
+        private int count = 16;
+
+        @Override
+        public void run() {
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final ImageView flashOverlay = (ImageView)findViewById(R.id.flash_overlay);
+                    if (flashOverlay.getVisibility() == View.VISIBLE)
+                        flashOverlay.setVisibility(View.GONE);
+                    else
+                    {
+                        flashOverlay.setVisibility(View.VISIBLE);
+                        mp.start();
+                    }
+                    count --;
+                    if (count == 0) FlashTask.this.cancel();
+                }
+            });
+        }
+    };
+    ImageView crossImage;
 
     //crosshair image
     ImageView crossImage;
@@ -56,6 +84,10 @@ public class MainActivity extends Activity implements SensorEventListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_camera);
         crossImage = (ImageView)findViewById(R.id.crosshair);
+
+        crossImage = (ImageView)findViewById(R.id.crosshair);
+        mp = MediaPlayer.create(this, R.raw.shot);
+
         // set up camera preview
         preview = (SurfaceView)findViewById(R.id.preview);
         previewHolder = preview.getHolder();
@@ -98,8 +130,10 @@ public class MainActivity extends Activity implements SensorEventListener {
                         camera.release();
                         camera = openCamera(useFrontComera);
                         inPreview = false;
-                        try { camera.setPreviewDisplay(previewHolder); }
-                        catch (IOException e) {}
+                        try {
+                            camera.setPreviewDisplay(previewHolder);
+                        } catch (IOException e) {
+                        }
                         startPreview();
                     }
                 }
@@ -202,6 +236,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     private boolean detectRoll = false;
     private boolean[] checkpointsR = new boolean[4];
     private boolean fullRollTurn = false;
+    private boolean detectRoll = false;
 
     private void setDetectRoll(boolean detectRoll){
         this.detectRoll = detectRoll;
@@ -274,6 +309,8 @@ public class MainActivity extends Activity implements SensorEventListener {
             backButton.setEnabled(true);
             final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
             swapCameraButton.setEnabled(false);
+
+            timer = new Timer(); timer.schedule(new FlashTask(), 0, 100);
         }
     }
     private Camera.PictureCallback pictureSaver = new Camera.PictureCallback() {

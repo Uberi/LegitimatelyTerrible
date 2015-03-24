@@ -27,9 +27,22 @@
     </FrameLayout>
     <ImageView
         android:id="@+id/crosshair"
+<<<<<<< HEAD
         android:background="@drawable/crosshairs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible" />
+=======
+        android:background="@drawable/crosshair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:id="@+id/flash_overlay" />
+>>>>>>> 9f1cb5abad9b9ae9cb01501026aa0fdb805f04e4
 
 </FrameLayout>
