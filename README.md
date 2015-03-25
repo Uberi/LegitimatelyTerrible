@@ -3,7 +3,7 @@ Legitimately Terrible
 
 ShakeItOff is a camera app. However, you can only take pictures by shaking the camera:
 
-![Picture](Picture.png)
+![Picture](Picture.jpg)
 ![Screenshot](Screen1.png)
 ![Screenshot](Screen2.png)
 ![Screenshot](Screen3.png)
