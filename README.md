@@ -4,9 +4,6 @@ Legitimately Terrible
 ShakeItOff is a camera app. However, you can only take pictures by shaking the camera:
 
 ![Picture](Picture.jpg)
-![Screenshot](Screen1.png)
-![Screenshot](Screen2.png)
-![Screenshot](Screen3.png)
 
 Open the app. Shake to take a picture. Images are saved in the phone gallery. If you rotate the phone 360 degrees, it will show a crosshair and play a sound.
 
