@@ -7,30 +7,31 @@
     <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:id="@+id/layout">
-
         <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:id="@+id/preview" />
 
-        <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay" android:orientation="horizontal"
-            tools:ignore="UselessParent">
-            <ImageButton
-                android:layout_width="64dp" android:layout_height="64dp"
-                android:id="@+id/back_button" android:background="@drawable/back" />
-            <ImageButton
-                android:layout_width="64dp" android:layout_height="64dp"
-                android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
-        </LinearLayout>
-
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal|top"
+            android:id="@+id/info" />
+        <ImageButton
+            android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="10dp"
+            android:scaleType="fitCenter" android:layout_gravity="bottom|left" android:visibility="gone"
+            android:id="@+id/back_button" android:background="@drawable/back" />
+        <ImageButton
+            android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="10dp"
+            android:scaleType="fitCenter" android:layout_gravity="bottom|center_horizontal"
+            android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
     </FrameLayout>
     <ImageView
         android:id="@+id/crosshair"
-        android:background="@drawable/crosshair"
+        android:src="@drawable/crosshair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:adjustViewBounds="false"
+        android:layout_margin="30dp"
+        android:visibility="gone" />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

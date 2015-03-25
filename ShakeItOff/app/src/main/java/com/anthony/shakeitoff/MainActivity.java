@@ -19,6 +19,7 @@ import android.hardware.Camera;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.media.MediaPlayer;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Timer;
@@ -30,22 +31,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class MainActivity extends Activity implements SensorEventListener {
+public class MainActivity extends Activity {
     public static final String TAG = "MainActivity";
 
     private ShakeListener mShaker;
+    private NoScopeListener mNoScoper;
 
     private boolean useFrontComera = false;
     private SurfaceView preview = null;
     private SurfaceHolder previewHolder = null;
     private Camera camera = null;
 
-    //checks the direction of spinning
-    private SensorManager cSensorManager;
-    private boolean canSpin = false;
-    private float currentDegree = 0f;
-    private float prevDegree = 0f;
-    private int prevTime = 0;
     MediaPlayer mp = null;
 
     Timer timer = null;
@@ -80,6 +76,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         // make the app fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_camera);
 
         crossImage = (ImageView)findViewById(R.id.crosshair);
@@ -91,26 +88,34 @@ public class MainActivity extends Activity implements SensorEventListener {
         previewHolder.addCallback(surfaceCallback);
         previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        //initialize your android device sensor capabilities
-        cSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-
         // set up the shake listener and back button for after picture taken
         final ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
         final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
-        backButton.setEnabled(false);
-        swapCameraButton.setEnabled(true);
         mShaker = new ShakeListener(this);
-        mShaker.setOnShakeListener(new ShakeListener.OnShakeListener () {
-            public void onShake() { takePicture(); }
+        mShaker.setListener(new ShakeListener.Listener () {
+            public void on() { takePicture(); }
+        });
+        mNoScoper = new NoScopeListener(this);
+        mNoScoper.setListener(new NoScopeListener.Listener () {
+            public void on() {
+                takePicture();
+                crossImage.setVisibility(View.VISIBLE);
+                crossImage.bringToFront();
+            }
+
+            public void display(String value) {
+                final TextView info = (TextView)findViewById(R.id.info);
+                info.setText(value);
+            }
         });
         backButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (camera != null && cameraConfigured && !inPreview) startPreview();
-                        backButton.setEnabled(false);
-                        swapCameraButton.setEnabled(true);
-                        crossImage.setVisibility(View.INVISIBLE);
+                        backButton.setVisibility(View.GONE);
+                        swapCameraButton.setVisibility(View.VISIBLE);
+                        crossImage.setVisibility(View.GONE);
                     }
                 }
         );
@@ -133,20 +138,19 @@ public class MainActivity extends Activity implements SensorEventListener {
     @Override
     public void onResume() {
         super.onResume();
-        cSensorManager.registerListener(this, cSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION), SensorManager.SENSOR_DELAY_GAME);
-        mShaker.resume();
+        mShaker.onResume(); mNoScoper.onResume();
 
         camera = openCamera(useFrontComera);
-        startPreview();
+
+        final ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
+        if (backButton.getVisibility() == View.GONE) startPreview(); // only start the preview if we are not currently in viewing mode
     }
 
     @Override
     public void onPause() {
         stopPreview();
         camera.release(); camera = null;
-
-        mShaker.pause();
-        cSensorManager.unregisterListener(this);
+        mShaker.onPause(); mNoScoper.onPause();
         super.onPause();
     }
 
@@ -182,6 +186,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
     private void startPreview() {
         if (cameraConfigured && camera != null && !inPreview) {
+            camera.setDisplayOrientation(90);
             camera.startPreview(); inPreview = true;
         }
     }
@@ -214,91 +219,15 @@ public class MainActivity extends Activity implements SensorEventListener {
         return cam;
     }
 
-
-    //MOD FUNCTIONS ARE REQUIRED IN ORDER TO WORK WITH DEGREES
-    /*private float modDeg(float deg){
-        deg = deg % 360;
-        if(deg < 0){
-            deg = deg + 360;
-        }
-        return deg;
-    }*/
-
-    private boolean[] checkpointsR = new boolean[4];
-    private boolean fullRollTurn = false;
-    private boolean detectRoll = false;
-
-    private void setDetectRoll(boolean detectRoll){
-        this.detectRoll = detectRoll;
-    }
-
-    private boolean areAllTrue(boolean[] array){
-        for(boolean b : array)
-            if (!b)
-                return false;
-        return true;
-    }
-
-
-    private void detectingRoll(){
-        setDetectRoll(true);
-        for(int i = 0; i < 4; i++){
-            if((currentDegree > 90 * i && currentDegree < 90 * (i + 1))){
-                checkpointsR[i] = true;
-            }
-        }
-        if(areAllTrue(checkpointsR) && currentDegree > 0 && currentDegree > 45){
-            fullRollTurn = true;
-            //reset checkpoints
-            for(int i = 0; i < 4; i++){
-                checkpointsR[i] = false;
-            }
-        }
-        setDetectRoll(false);
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event){
-        float degree = Math.round(event.values[0]);
-        Calendar c = Calendar.getInstance();
-        int curSeconds = c.get(Calendar.SECOND);
-        if((prevDegree > degree - 5) && (prevDegree < degree + 5)) {
-            if (prevTime + 2 < curSeconds) {
-                canSpin = true;
-            }
-        }
-        else {
-            prevDegree = degree;
-        }
-
-        if(canSpin){
-            detectingRoll();
-        }
-        if(fullRollTurn){
-            canSpin = false;
-            takePicture();
-            crossImage.setVisibility(View.VISIBLE);
-            crossImage.bringToFront();
-            fullRollTurn = false;
-        }
-        //I don't know why this is here so im commenting it out
-        currentDegree = degree;
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy){
-        //not in use
-    }
-
     private void takePicture() { // takes a picture and stops the image preview
         if (camera != null && cameraConfigured && inPreview) {
             inPreview = false;
             camera.takePicture(null, null, pictureSaver); // take picture with JPEG callback
 
             final ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
-            backButton.setEnabled(true);
+            backButton.setVisibility(View.VISIBLE);
             final ImageButton swapCameraButton = (ImageButton)findViewById(R.id.swap_camera_button);
-            swapCameraButton.setEnabled(false);
+            swapCameraButton.setVisibility(View.GONE);
 
             timer = new Timer(); timer.schedule(new FlashTask(), 0, 100);
         }
