@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="#0099cc"
+    tools:context=".CameraActivity">
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:id="@+id/layout">
+        <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:id="@+id/preview" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal|top"
+            android:id="@+id/info" />
+        <ImageButton
+            android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="10dp"
+            android:scaleType="fitCenter" android:layout_gravity="bottom|left" android:visibility="gone"
+            android:id="@+id/back_button" android:background="@drawable/back" />
+        <ImageButton
+            android:layout_width="64dp" android:layout_height="64dp" android:layout_margin="10dp"
+            android:scaleType="fitCenter" android:layout_gravity="bottom|center_horizontal"
+            android:id="@+id/swap_camera_button" android:background="@drawable/swap_camera" />
+    </FrameLayout>
+    <ImageView
+        android:id="@+id/crosshair"
+        android:src="@drawable/crosshair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="false"
+        android:layout_margin="30dp"
+        android:visibility="gone" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:id="@+id/flash_overlay" />
+
+</FrameLayout>
