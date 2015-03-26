@@ -31,7 +31,7 @@
     <meta name="selected-link" value="repo_source" data-pjax-transient>
       <meta name="google-analytics" content="UA-3769691-2">
 
-    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="415ECAB2:521F:12BADC:551481C9" name="octolytics-dimension-request_id" /><meta content="5913106" name="octolytics-actor-id" /><meta content="thadeaus" name="octolytics-actor-login" /><meta content="1776ecdd9213b38acccbc8e91ab49526e06321bfafbbc3e13e7de42f065475cc" name="octolytics-actor-hash" />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="415ECAB2:7C7F:61930D:551482C9" name="octolytics-dimension-request_id" /><meta content="5913106" name="octolytics-actor-id" /><meta content="thadeaus" name="octolytics-actor-login" /><meta content="1776ecdd9213b38acccbc8e91ab49526e06321bfafbbc3e13e7de42f065475cc" name="octolytics-actor-hash" />
     
     <meta content="Rails, view, blob#show" name="analytics-event" />
 
@@ -40,7 +40,7 @@
 
 
     <meta content="authenticity_token" name="csrf-param" />
-<meta content="HD1x06uRKJqDumPfqffRy2qyJFq6/S/XZgXOyixms39ecCYkmI+Aiuqj4OeN+mrWdJO9ax1Hxu4n33cWkgVN0A==" name="csrf-token" />
+<meta content="BcMpTGspgxMkG7S1zd3WNxcq3WMJpaT3ePk94BwzQINSU/Zs6MUzhodZeMMMiNrZXheOHnqfYr+vetMAx0q/jA==" name="csrf-token" />
 
     <link href="https://assets-cdn.github.com/assets/github-72aef5c1eab64bf684cb6f55513fae147b11b63503bf2311319ec22e77d3194f.css" media="all" rel="stylesheet" />
     <link href="https://assets-cdn.github.com/assets/github2-40d9bf14363443ccf64a2b71208f59e8739d6288d962feba121227e0608772f3.css" media="all" rel="stylesheet" />
@@ -159,7 +159,7 @@
   </li>
 
   <li class="header-nav-item">
-    <form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="vm1cSlK/P4A8NDX8FuNaEDvqw8rqTawxAmuKDCcsYLrz5asAY0L43Q3d8rBbwLXeEpdGJiU4cD5YDUg20boy7g==" /></div>
+    <form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="KuADJMBXC1ekkxmDJ9RhGuNqEVM+j6Npvexthp8+VAOzC42VVgzz+47wqaCrIbzIw9010YxI8F3TGc2+MG53EQ==" /></div>
       <button class="header-nav-link sign-out-button tooltipped tooltipped-s" aria-label="Sign out" data-ga-click="Header, sign out, icon:logout">
         <span class="octicon octicon-sign-out"></span>
       </button>
@@ -188,7 +188,7 @@
 <ul class="pagehead-actions">
 
   <li>
-      <form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="iFTpBC0RDcn+S8X2wPSYHDrfMC+NYAo4awgrKAcRs7ARGeUsQqt4hkHyVGWPybgJQPuX5w1ZzRzb7yj1syZONA==" /></div>    <input id="repository_id" name="repository_id" type="hidden" value="32641339" />
+      <form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="e/vL7ccjVMDWzFCPmSOMhvhU9dUK0ELD9QHNC3yMuwowd5n20x834Y+z5gY7IY0YtSIoGWLSeT6EYbsOnKs62Q==" /></div>    <input id="repository_id" name="repository_id" type="hidden" value="32641339" />
 
       <div class="select-menu js-menu-container js-select-menu">
         <a href="/Uberi/LegitimatelyTerrible/subscription"
@@ -263,7 +263,7 @@
     
   <div class="js-toggler-container js-social-container starring-container on">
 
-    <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/unstar" class="js-toggler-form starred js-unstar-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="L51PejgDRCEebrOPl9M8ToZ+OWPurZtzZv1GP1k4/PHlB1owgFhx9JRpKBVAwaa/iiMgXvnMnRMMKt1isfzTYg==" /></div>
+    <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/unstar" class="js-toggler-form starred js-unstar-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="0r+CWDgGdq4cwYjk066yCutl3mrSQeMJNendta4VQo9JD8RE8V/T5HVKSK0jMH7Q4nLGrg6+5eH4yC72fgigqg==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Unstar this repository" title="Unstar Uberi/LegitimatelyTerrible"
@@ -275,7 +275,7 @@
           4
         </a>
 </form>
-    <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/star" class="js-toggler-form unstarred js-star-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="YCYTwa37YHrhDTomivVJNIl0TT/8PRnB1XJKJUlfEzOuF28EIDfFmcL6u39DOw+Fk5FX/tGpFjMsdLEKFv6yWw==" /></div>
+    <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/star" class="js-toggler-form unstarred js-star-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="J2lKFqOLqBnDvvbbLkVXd50jJdA/H1BLDheuqSQGZ+ayhZXivAfAfaWRlVvW9imCRk9QbHq7mpD35wv+w2gzFA==" /></div>
       <button
         class="btn btn-sm btn-with-count js-toggler-target"
         aria-label="Star this repository" title="Star Uberi/LegitimatelyTerrible"
@@ -291,7 +291,7 @@
   </li>
 
         <li>
-          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/fork" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="Cx26ajBbkxSeleap3JFfCMu+v0htBVi/DbKPATrasYUJGmoDGMaZcBbBF1W1uOIiWxXgjjITUuVjlFd6VktXMw==" /></div>
+          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/fork" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="d4P+Ke57vam/MhoBHkr8fKWkg4OVsBQKUZAxMZlUlGuL3gDfxzfbvexItxXm4eHrp+651ZJPXGw3tF+UwMyRyg==" /></div>
             <button
                 type="submit"
                 class="btn btn-sm btn-with-count"
@@ -504,7 +504,7 @@
             </a>
         </div>
 
-          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="blkLtfvOoyTvFnZWDnr3SVyhDkAD4QoXk7mPIFC2Z+22AjHWECiZti/9xR2sEZu0x8ymvaM9XjEFIe0TLlQmDw==" /></div>
+          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="xiu9SGEIB+Wf116rnZfdJo7A46DkrtO6PVzUczz3K/xauIj5cEhBEPC0Pq9RAVHF7BNLpUr1oUR7iPoidRS6JQ==" /></div>
             <span class="octicon octicon-git-branch select-menu-item-icon"></span>
             <div class="select-menu-item-text">
               <span class="select-menu-item-heading">Create branch: <span class="js-new-item-name"></span></span>
@@ -589,7 +589,7 @@
         </a>
 
 
-          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/delete/master/ShakeItOff/app/src/main/res/drawable/crosshair.png" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ZsLXynWdCJ9bJ65EA/6Kvp10dLS/9E8PUKvp3JQwQQhXKA3nCC44lGyRN0b/dTorgsxWBKt801ge7y4zkkZOhw==" /></div>
+          <form accept-charset="UTF-8" action="/Uberi/LegitimatelyTerrible/delete/master/ShakeItOff/app/src/main/res/drawable/crosshair.png" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="81OT4Nezc/wwQCK/i3M84/FwrgjOofwtDTdqc+zpb/DF+DSg/KPKuY9PuFrOUNX2YNwXGmMsGonw9pdILscYDw==" /></div>
             <button class="octicon-btn octicon-btn-danger tooltipped tooltipped-n" type="submit" aria-label="Delete this file" data-disable-with>
               <span class="octicon octicon-trashcan"></span>
             </button>
@@ -641,7 +641,7 @@
       <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
 </a>
     <ul class="site-footer-links">
-      <li>&copy; 2015 <span title="0.06916s from github-fe125-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+      <li>&copy; 2015 <span title="0.08091s from github-fe123-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
         <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
         <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
