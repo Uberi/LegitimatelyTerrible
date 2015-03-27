@@ -8,8 +8,8 @@ android {
         applicationId "com.anthony.shakeitoff"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 21
+        versionName "2.1"
     }
     buildTypes {
         release {
