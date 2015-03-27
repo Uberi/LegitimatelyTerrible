@@ -1,11 +1,9 @@
 package com.anthony.shakeitoff;
 
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,24 +13,27 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.hardware.Camera;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.media.MediaPlayer;
 import android.widget.TextView;
 
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
+
+//Ads
 
 public class MainActivity extends Activity {
     public static final String TAG = "MainActivity";
+
+    private AdView mAdView;
 
     private ShakeListener mShaker;
     private NoScopeListener mNoScoper;
@@ -78,6 +79,11 @@ public class MainActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_camera);
+
+        //Ads
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         crossImage = (ImageView)findViewById(R.id.crosshair);
         mp = MediaPlayer.create(this, R.raw.shot);
@@ -138,6 +144,7 @@ public class MainActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+        mAdView.resume();
         mShaker.onResume(); mNoScoper.onResume();
 
         camera = openCamera(useFrontComera);
@@ -151,9 +158,15 @@ public class MainActivity extends Activity {
         stopPreview();
         camera.release(); camera = null;
         mShaker.onPause(); mNoScoper.onPause();
+        mAdView.pause();
         super.onPause();
     }
 
+    @Override
+    protected void onDestroy(){
+        mAdView.destroy();
+        super.onDestroy();
+    }
     // get the largest preview size (by area) that still fits inside the layout
     private Camera.Size getBestPreviewSize(int width, int height, Camera.Parameters parameters) {
         Camera.Size result = null;

@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#0099cc"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".CameraActivity">
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -9,6 +10,14 @@
         android:id="@+id/layout">
         <SurfaceView android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:id="@+id/preview" />
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id">
+        </com.google.android.gms.ads.AdView>
 
         <TextView
             android:layout_width="fill_parent"
