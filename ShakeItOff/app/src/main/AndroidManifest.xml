@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name"
+        android:label="ShakeCam"
         android:theme="@style/AppTheme">
 
         <!--This meta-data tag is required to use Google Play Services.-->
@@ -19,7 +19,7 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
+            android:label="ShakeCam"
             android:theme="@style/FullscreenTheme"
             android:screenOrientation="portrait">
             <intent-filter>

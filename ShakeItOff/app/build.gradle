@@ -5,11 +5,11 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.anthony.shakeitoff"
+        applicationId "com.anthony.shakecam"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 21
-        versionName "2.1"
+        versionCode 22
+        versionName "2.2"
     }
     buildTypes {
         release {
